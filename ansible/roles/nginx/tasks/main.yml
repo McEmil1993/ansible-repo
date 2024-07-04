@@ -1,0 +1,53 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+
+- name: Ensure NGINX is running
+  service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Create NGINX configuration directory
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+
+- name: Deploy NGINX configuration
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+    mode: 0644
+
+- name: Enable NGINX configuration
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+
+- name: Test NGINX configuration
+  command: nginx -t
+  notify:
+    - Restart NGINX
+
+- name: Remove default NGINX configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Enable custom NGINX configuration
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+
+- name: Test NGINX configuration
+  command: nginx -t
+  notify:
+    - Restart NGINX

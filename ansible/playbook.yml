@@ -1,0 +1,21 @@
+---
+- hosts: webservers
+  become: true
+  roles:
+    - nginx
+    - nodejs
+  handlers:
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted
+
+- hosts: dbservers
+  become: true
+  roles:
+    - mysql
+  handlers:
+    - name: Restart MySQL
+      service:
+        name: mysql
+        state: restarted

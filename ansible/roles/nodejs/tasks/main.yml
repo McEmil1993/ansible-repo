@@ -1,0 +1,11 @@
+---
+- name: Install Node.js 20.x
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_20.x jammy main
+    state: present
+    update_cache: yes
+
+- name: Install Node.js and npm
+  apt:
+    name: ['nodejs', 'npm']
+    state: present

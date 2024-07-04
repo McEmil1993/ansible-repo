@@ -1,0 +1,32 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install MySQL server
+  apt:
+    name: mysql-server
+    state: present
+
+- name: Ensure MySQL is running
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: Deploy MySQL configuration
+  copy:
+    src: my.cnf
+    dest: /etc/mysql/my.cnf
+    mode: 0644
+    owner: mysql
+    group: mysql
+  notify:
+    - Restart MySQL
+
+- name: Set MySQL root password
+  mysql_user:
+    name: root
+    password: your_password
+    host_all: yes
+    state: present
