@@ -1,20 +1,55 @@
+#
+# - hosts: webservers
+#   become: true
+#   roles:
+#     - nginx
+#     - nodejs
+#   handlers:
+#     - name: Restart NGINX
+#       service:
+#         name: nginx
+#         state: restarted
+
+# - hosts: dbservers
+#   become: true
+#   roles:
+#     - mysql
+#   handlers:
+#     - name: Restart MySQL
+#       service:
+#         name: mysql
+#         state: restarted
 ---
-- hosts: webservers
+- hosts: localhost
+  connection: local
   become: true
-  roles:
-    - nginx
-    - nodejs
+
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+      notify:
+        - Restart NGINX
+
+    - name: Install Node.js and npm
+      apt:
+        name: ['nodejs', 'npm']
+        state: present
+
+    - name: Install MySQL Server
+      apt:
+        name: mysql-server
+        state: present
+      notify:
+        - Restart MySQL
+
   handlers:
     - name: Restart NGINX
       service:
         name: nginx
         state: restarted
 
-- hosts: dbservers
-  become: true
-  roles:
-    - mysql
-  handlers:
     - name: Restart MySQL
       service:
         name: mysql
