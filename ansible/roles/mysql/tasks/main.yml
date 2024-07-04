@@ -16,8 +16,8 @@
 
 - name: Deploy MySQL configuration
   copy:
-    src: my.cnf
-    dest: /etc/mysql/my.cnf
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
     mode: 0644
     owner: mysql
     group: mysql
@@ -30,3 +30,13 @@
     password: your_password
     host_all: yes
     state: present
+
+- name: Create MySQL user 'manager' with all privileges
+  mysql_user:
+    name: manager
+    password: 12345
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+  notify:
+    - Restart MySQL
