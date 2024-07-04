@@ -19,6 +19,32 @@
 #       service:
 #         name: mysql
 #         state: restarted
+# ############## using inventory
+# ---
+# - hosts: webservers
+#   remote_user: root
+#   become: true
+#   roles:
+#     - nginx
+#     - nodejs
+#     - mysql
+#   handlers:
+#     - name: Restart NGINX
+#       service:
+#         name: nginx
+#         state: restarted
+
+# - hosts: dbservers
+#   remote_user: root
+#   become: true
+#   roles:
+#     - mysql
+#   handlers:
+#     - name: Restart MySQL
+#       service:
+#         name: mysql
+#         state: restarted
+
 ---
 - hosts: localhost
   connection: local
