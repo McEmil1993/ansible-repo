@@ -16,7 +16,7 @@
 
 - name: Deploy MySQL configuration
   copy:
-    src: mysqld.cnf
+    src: ../files/mysqld.cnf
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
     mode: 0644
     owner: mysql
@@ -27,7 +27,7 @@
 - name: Set MySQL root password
   mysql_user:
     name: root
-    password: your_password
+    password: 12345
     host_all: yes
     state: present
 

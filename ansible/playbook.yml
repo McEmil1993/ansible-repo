@@ -45,31 +45,49 @@
 #         name: mysql
 #         state: restarted
 
+# ---
+# - hosts: localhost
+#   connection: local
+#   become: true
+
+#   tasks:
+#     - name: Install NGINX
+#       apt:
+#         name: nginx
+#         state: present
+#       notify:
+#         - Restart NGINX
+
+#     - name: Install Node.js and npm
+#       apt:
+#         name: ['nodejs', 'npm']
+#         state: present
+
+#     - name: Install MySQL Server
+#       apt:
+#         name: mysql-server
+#         state: present
+#       notify:
+#         - Restart MySQL
+
+#   handlers:
+#     - name: Restart NGINX
+#       service:
+#         name: nginx
+#         state: restarted
+
+#     - name: Restart MySQL
+#       service:
+#         name: mysql
+#         state: restarted
 ---
 - hosts: localhost
   connection: local
   become: true
-
-  tasks:
-    - name: Install NGINX
-      apt:
-        name: nginx
-        state: present
-      notify:
-        - Restart NGINX
-
-    - name: Install Node.js and npm
-      apt:
-        name: ['nodejs', 'npm']
-        state: present
-
-    - name: Install MySQL Server
-      apt:
-        name: mysql-server
-        state: present
-      notify:
-        - Restart MySQL
-
+  roles:
+    - nginx
+    - nodejs
+    - mysql
   handlers:
     - name: Restart NGINX
       service:
