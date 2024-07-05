@@ -1,8 +1,9 @@
-sudo apt remove --purge nodejs
-sudo apt autoremove
+
+yes | sudo apt remove --purge nodejs
+yes | sudo apt autoremove
 sudo systemctl stop nginx
-sudo apt remove --purge nginx
-sudo apt autoremove
+yes | sudo apt remove --purge nginx
+yes | sudo apt autoremove
 sudo systemctl stop mysql
-sudo apt remove --purge mysql-server mysql-client
-sudo apt autoremove
+yes | sudo apt remove --purge mysql-server mysql-client
+yes | sudo apt autoremove
