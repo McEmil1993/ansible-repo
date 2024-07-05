@@ -126,16 +126,21 @@
         state: directory
       ignore_errors: yes
 
-    - name: Remove MySQL configuration files
+    - name: Attempt to remove MySQL configuration files
       file:
         path: /etc/mysql
         state: absent
         recurse: yes
+      register: remove_mysql_config_files
       ignore_errors: yes
+
+    - name: Debug the result of the directory removal
+      debug:
+        var: remove_mysql_config_files
 
     - name: Fallback - Remove MySQL configuration files with shell
       shell: rm -rf /etc/mysql
-      when: result is failed
+      when: remove_mysql_config_files.failed
       ignore_errors: yes
 
     # Uninstall Node.js and npm
