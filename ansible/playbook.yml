@@ -81,7 +81,8 @@
 #         name: mysql
 #         state: restarted
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   become: true
   roles:
     - nginx
