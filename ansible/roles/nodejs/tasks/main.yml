@@ -1,27 +1,11 @@
 ---
-- name: Update APT package index
-  apt:
+- name: Install Node.js 20.x
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_20.x jammy main
+    state: present
     update_cache: yes
 
-- name: Remove conflicting nodejs and libnode-dev packages
+- name: Install Node.js
   apt:
-    name: '{{ item }}'
-    state: absent
-  with_items:
-    - nodejs
-    - libnode-dev
-  ignore_errors: yes  # Ignore errors in case the packages are not installed
-
-- name: Fetch and execute NodeSource setup script for Node.js 20.x
-  become: yes
-  shell: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-
-- name: Install Node.js and npm from NodeSource
-  apt:
-    name: nodejs
-    state: present
-
-- name: Install npm from NodeSource
-  apt:
-    name: npm
+    name: ['nodejs']
     state: present
