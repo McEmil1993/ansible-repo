@@ -1,3 +1,56 @@
+# ---
+# - hosts: localhost
+#   connection: local
+#   become: true
+#   tasks:
+#     - name: Stop NGINX
+#       service:
+#         name: nginx
+#         state: stopped
+
+#     - name: Remove NGINX
+#       apt:
+#         name: nginx
+#         state: absent
+#         purge: yes
+
+#     - name: Stop MySQL
+#       service:
+#         name: mysql
+#         state: stopped
+
+#     - name: Remove MySQL server
+#       apt:
+#         name: mysql-server
+#         state: absent
+#         purge: yes
+
+#     - name: Remove MySQL configuration files
+#       file:
+#         path: /etc/mysql
+#         state: absent
+#         recurse: yes
+
+#     # Uninstall Node.js and npm
+#     - name: Remove Node.js
+#       apt:
+#         name: nodejs
+#         state: absent
+#         purge: yes
+
+#     - name: Remove npm
+#       apt:
+#         name: npm
+#         state: absent
+#         purge: yes
+
+#     # Optional: Remove NodeSource repository
+#     - name: Remove NodeSource repository
+#       apt_repository:
+#         repo: deb https://deb.nodesource.com/node_20.x jammy main
+#         state: absent
+
+
 ---
 - hosts: localhost
   connection: local
@@ -25,27 +78,16 @@
         state: absent
         purge: yes
 
+    - name: Debug directory before removal
+      command: ls -ld /etc/mysql
+      register: mysql_dir
+      ignore_errors: yes
+
+    - debug:
+        var: mysql_dir
+
     - name: Remove MySQL configuration files
       file:
         path: /etc/mysql
         state: absent
         recurse: yes
-
-    # Uninstall Node.js and npm
-    - name: Remove Node.js
-      apt:
-        name: nodejs
-        state: absent
-        purge: yes
-
-    - name: Remove npm
-      apt:
-        name: npm
-        state: absent
-        purge: yes
-
-    # Optional: Remove NodeSource repository
-    - name: Remove NodeSource repository
-      apt_repository:
-        repo: deb https://deb.nodesource.com/node_20.x jammy main
-        state: absent
