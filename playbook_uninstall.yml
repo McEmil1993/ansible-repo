@@ -32,7 +32,7 @@
         recurse: yes
 
     # Uninstall Node.js and npm
-    - name: Remove Node.js and npm
+    - name: Remove Node.js
       apt:
         name: nodejs
         state: absent
