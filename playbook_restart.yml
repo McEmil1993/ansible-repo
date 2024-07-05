@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Restart MySQL
+      service:
+        name: mysql
+        state: restarted
+
+    # Note: There is no direct service for Node.js. Usually, you manage Node.js applications using process managers like PM2 or systemd. 
+    # Here’s an example of restarting a Node.js application using systemd
+    - name: Restart Node.js application
+      systemd:
+        name: my_node_app
+        state: restarted
