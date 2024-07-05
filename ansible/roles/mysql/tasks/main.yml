@@ -7,14 +7,16 @@
   apt:
     name: mysql-server
     state: present
+  ignore_errors: yes  # Ignore errors temporarily for troubleshooting
 
-- name: Ensure MySQL is running
+- name: Ensure MySQL service is running and enabled
   service:
     name: mysql
     state: started
-    enabled: true
+    enabled: yes
+  ignore_errors: yes  # Ignore errors temporarily for troubleshooting
 
-- name: Deploy MySQL configuration
+- name: Deploy MySQL configuration file
   copy:
     src: ../files/mysqld.cnf
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -30,6 +32,8 @@
     password: 12345
     host_all: yes
     state: present
+  notify:
+    - Restart MySQL
 
 - name: Create MySQL user 'manager' with all privileges
   mysql_user:
@@ -40,3 +44,9 @@
     state: present
   notify:
     - Restart MySQL
+
+handlers:
+  - name: Restart MySQL
+    service:
+      name: mysql
+      state: restarted
