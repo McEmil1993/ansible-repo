@@ -45,8 +45,8 @@
   notify:
     - Restart MySQL
 
-handlers:
-  - name: Restart MySQL
-    service:
-      name: mysql
-      state: restarted
+# handlers:
+#   - name: Restart MySQL
+#     service:
+#       name: mysql
+#       state: restarted
