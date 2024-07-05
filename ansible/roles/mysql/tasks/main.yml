@@ -26,12 +26,17 @@
   notify:
     - Restart MySQL
     
-- name: Create MySQL user 'manager' with all privileges
-  mysql_user:
-    name: manager
-    password: 12345
-    priv: '*.*:ALL'
-    host: '%'
-    state: present
+- name: Create MySQL user 'manager' with all privileges using SQL query
+  mysql_query:
+    login_user: root  # Use appropriate MySQL root user credentials
+    login_password: "{{ mysql_root_password }}"  # Define mysql_root_password in your Ansible vault or as a variable
+    query: "GRANT ALL PRIVILEGES ON *.* TO 'manager'@'%' IDENTIFIED BY '12345';"
+
   notify:
     - Restart MySQL
+
+# handlers:
+#   - name: Restart MySQL
+#     service:
+#       name: mysql
+#       state: restarted
