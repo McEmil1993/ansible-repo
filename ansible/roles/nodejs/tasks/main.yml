@@ -11,20 +11,20 @@
 #     state: present
 
 ---
-- name: Update APT cache
+- name: Update APT package index
   apt:
     update_cache: yes
 
-- name: Fix broken packages (if needed)
-  shell: sudo apt --fix-broken install
-
-- name: Install Node.js 20.x repository
-  apt_repository:
-    repo: deb https://deb.nodesource.com/node_20.x jammy main
-    state: present
-    update_cache: yes
+- name: Fetch and execute NodeSource setup script for Node.js 20.x
+  # become: yes
+  shell: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 
 - name: Install Node.js and npm
   apt:
-    name: ['nodejs', 'npm']
+    name: nodejs
+    state: present
+
+- name: Install npm
+  apt:
+    name: npm
     state: present
