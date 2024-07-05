@@ -143,7 +143,6 @@
       when: remove_mysql_config_files.failed
       ignore_errors: yes
 
-    # Uninstall Node.js and npm
     - name: Remove Node.js
       apt:
         name: nodejs
@@ -156,7 +155,6 @@
         state: absent
         purge: yes
 
-    # Optional: Remove NodeSource repository
     - name: Remove NodeSource repository
       apt_repository:
         repo: deb https://deb.nodesource.com/node_20.x jammy main
