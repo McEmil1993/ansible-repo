@@ -19,12 +19,12 @@
   # become: yes
   shell: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 
-- name: Install Node.js and npm
+- name: Install Node.js
   apt:
     name: nodejs
     state: present
 
-- name: Install npm
-  apt:
-    name: npm
-    state: present
+# - name: Install npm
+#   apt:
+#     name: npm
+#     state: present
