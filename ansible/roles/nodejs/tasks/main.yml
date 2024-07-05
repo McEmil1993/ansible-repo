@@ -11,10 +11,12 @@
 #     state: present
 
 ---
-- name: Import NodeSource GPG key
-  apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Fix broken packages (if needed)
+  shell: sudo apt --fix-broken install
 
 - name: Install Node.js 20.x repository
   apt_repository:
