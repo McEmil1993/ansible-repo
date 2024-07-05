@@ -26,14 +26,13 @@
   notify:
     - Restart MySQL
 
-# - name: Set MySQL root password
-#   mysql_user:
-#     name: root
-#     password: 12345
-#     host_all: yes
-#     state: present
-#   notify:
-#     - Restart MySQL
+- name: Set MySQL root password
+  mysql_user:
+    name: root
+    password: 12345
+    host_all: yes
+    state: present
+  ignore_errors: yes
 
 - name: Create MySQL user 'manager' with all privileges
   mysql_user:
