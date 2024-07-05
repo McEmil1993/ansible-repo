@@ -1,22 +1,20 @@
 #!/bin/bash
 
-# MySQL root credentials
-MYSQL_USER="root"
-MYSQL_PASSWORD="  "
-
-# MySQL user details
+# Define MySQL credentials and user details
 MYSQL_USERNAME="manager"
 MYSQL_USER_PASSWORD="12345"
+MYSQL_ROOT_PASSWORD="  "  # Replace with your actual MySQL root password
 
-# MySQL query to create user with privileges
-QUERY="GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_USER_PASSWORD';"
+# MySQL commands to create user and grant privileges
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<MYSQL_SCRIPT
+CREATE USER '${MYSQL_USERNAME}'@'%' IDENTIFIED BY '${MYSQL_USER_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USERNAME}'@'%';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
 
-# Execute MySQL query using mysql client
-mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "$QUERY"
-
-# Check if the query executed successfully
+# Optionally, you can output success/failure messages or handle errors
 if [ $? -eq 0 ]; then
-    echo "MySQL user '$MYSQL_USERNAME' created successfully."
+    echo "MySQL user '${MYSQL_USERNAME}' created successfully."
 else
-    echo "Failed to create MySQL user '$MYSQL_USERNAME'."
+    echo "Failed to create MySQL user '${MYSQL_USERNAME}'."
 fi
