@@ -28,9 +28,10 @@
 
 # Execute the bash script to create MySQL user 'manager'
 - name: Create MySQL user 'manager' using bash script
-  script: bash ../files/create_mysql_user.sh
+  script: ../files/create_mysql_user.sh
   args:
     executable: /bin/bash
+  become: yes # Adjust the path based on where bash is installed
     
 # - name: Create MySQL user 'manager' with all privileges using SQL query
 #   mysql_query:
